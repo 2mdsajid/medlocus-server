@@ -133,6 +133,11 @@ router.get('/userprofile', AuthUserMiddleware, (req, res) => {
     res.send(req.verifieduser)
 })
 
+router.post('/userprofile', AuthUserMiddleware, (req, res) => {
+    const logintoken = req.body.logintoken;
+    res.send(req.verifieduser)
+})
+
 // GET USERNAME ||| if logged in
 router.get('/getusername', AuthUserMiddleware, (req, res) => {
     res.send({ username: req.username })
