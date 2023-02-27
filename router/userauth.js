@@ -59,7 +59,7 @@ router.post('/userlogin', async (req, res) => {
     var Cookie = new Cookies(req, res)
 
     try {
-        let token;
+        let logintoken;
 
         const { email, password } = req.body
 
@@ -79,7 +79,7 @@ router.post('/userlogin', async (req, res) => {
 
                 /* GENERATING JWT TOKEN */
                 logintoken = await userindb.GenerateAuthToken()
-                console.log(logintoken);
+//                 console.log(logintoken);
 
 
 
