@@ -93,18 +93,18 @@ router.post('/userlogin', async (req, res) => {
 
             } else {
                 res.status(400).json({
-                    message: "invalid cred",
+                    message: "invalid password",
                     status: 400
                 })
             }
         } else {
             res.status(400).json({
-                message: "invalid cred",
+                message: "invalid email",
                 status: 400
             })
         }
     } catch (error) {
-        console.log(error);
+        console.log('error in trycatch',error);
     }
 
 })
