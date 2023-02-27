@@ -84,7 +84,15 @@ router.post('/userlogin', async (req, res) => {
 
 
                 /* ATORING JWT TOKEN IN COOKIES */
-                Cookie.set('logintoken', logintoken, { expires: new Date(Date.now() + 6000000) });
+                
+                Cookie.set('logintoken', logintoken, { 
+                            expires: new Date(Date.now() + 6000000), 
+                            sameSite: 'None', 
+                            secure: true 
+                         });
+                
+                
+//                 Cookie.set('logintoken', logintoken, { expires: new Date(Date.now() + 6000000) });
                 // res.cookie("logintoken", logintoken, {
                 //     expires:new Date(Date.now()+500000),
                 //     httpOnly:true
