@@ -59,7 +59,7 @@ router.post('/userlogin', async (req, res) => {
     var Cookie = new Cookies(req, res)
 
     try {
-        let logintoken;
+//         let logintoken;
 
         const { email, password } = req.body
 
@@ -78,7 +78,7 @@ router.post('/userlogin', async (req, res) => {
             if (userindb.password === password) {
 
                 /* GENERATING JWT TOKEN */
-                logintoken = await userindb.GenerateAuthToken()
+               const logintoken = await userindb.GenerateAuthToken()
 //                 console.log(logintoken);
 
 
@@ -92,7 +92,7 @@ router.post('/userlogin', async (req, res) => {
 //                          });
                 
                 
-                Cookie.set('logintoken', logintoken, { expires: new Date(Date.now() + 6000000) });
+//                 Cookie.set('logintoken', logintoken, { expires: new Date(Date.now() + 6000000) });
                 // res.cookie("logintoken", logintoken, {
                 //     expires:new Date(Date.now()+500000),
                 //     httpOnly:true
