@@ -89,7 +89,7 @@ router.post('/userlogin', async (req, res) => {
                 //     expires:new Date(Date.now()+500000),
                 //     httpOnly:true
                 // })
-                res.send(userindb)
+                res.json({user:userindb,logintoken:logintoken})
 
             } else {
                 res.status(400).json({
