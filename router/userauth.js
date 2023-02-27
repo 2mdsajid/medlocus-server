@@ -92,7 +92,7 @@ router.post('/userlogin', async (req, res) => {
 //                          });
                 
                 
-//                 Cookie.set('logintoken', logintoken, { expires: new Date(Date.now() + 6000000) });
+                Cookie.set('logintoken', logintoken, { expires: new Date(Date.now() + 6000000) });
                 // res.cookie("logintoken", logintoken, {
                 //     expires:new Date(Date.now()+500000),
                 //     httpOnly:true
