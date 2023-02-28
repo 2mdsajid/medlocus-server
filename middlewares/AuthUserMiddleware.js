@@ -7,15 +7,17 @@ const AuthUserMiddleware = async (req, res, next) => {
     try {
 
         var Cookie = new Cookies(req,res) //Cookies library
+        
+
+        // get the token from the Authorization header
+        const logintoken = req.body.logintoken
+        console.log('logintoken in auth',logintoken)
 
         // console.log('cookie', req.cookies.token);
         // get the token
-//         const logintoken = Cookie.get('logintoken') //name of the token
-//         console.log('token in auth')
-//         console.log(logintoken)
-        
-        // get the token from the Authorization header
-        const logintoken = req.headers.authorization.replace('Bearer ', '')
+        // const logintoken = Cookie.get('logintoken') //name of the token
+        // console.log('token in auth')
+        // console.log(logintoken)
 
         // verify the token
         const verifylogintoken = jwt.verify(logintoken, process.env.SECRET_KEY)
