@@ -33,7 +33,7 @@ router.post('/usersignup', async (req, res) => {
 router.post('/addtestdata', AuthUserMiddleware, async (req, res) => {
     try {
 
-        const { testmode, testtitle, totalscore, totalwrong, unattempt, totaltimetaken, questions } = req.body
+        const { logintoken,testmode, testtitle, totalscore, totalwrong, unattempt, totaltimetaken, questions } = req.body
 
         //  req.id == _id (for db) 
         // coming from the AuthUserMiddleware
@@ -53,13 +53,27 @@ router.post('/addtestdata', AuthUserMiddleware, async (req, res) => {
     }
 })
 
+// USER PROFILE
+router.post('/userprofile', AuthUserMiddleware, (req, res) => {
+
+    try {
+        // const { logintoken, token } = req.body;
+        // console.log('token in post', token)
+        res.send(req.verifieduser)
+
+    } catch (error) {
+        console.log(error)
+    }
+
+})
+
 // USER LOGIN
 router.post('/userlogin', async (req, res) => {
 
     var Cookie = new Cookies(req, res)
 
     try {
-//         let logintoken;
+        let token;
 
         const { email, password } = req.body
 
@@ -78,28 +92,21 @@ router.post('/userlogin', async (req, res) => {
             if (userindb.password === password) {
 
                 /* GENERATING JWT TOKEN */
-               const logintoken = await userindb.GenerateAuthToken()
-//                 console.log(logintoken);
+                logintoken = await userindb.GenerateAuthToken()
+                console.log(logintoken);
 
 
 
                 /* ATORING JWT TOKEN IN COOKIES */
-                
-//                 Cookie.set('logintoken', logintoken, { 
-//                             expires: new Date(Date.now() + 6000000), 
-//                             sameSite: 'None', 
-//                             secure: true 
-//                          });
-                
-                
-//                 Cookie.set('logintoken', logintoken, { expires: new Date(Date.now() + 6000000) });
+                // Cookie.set('logintoken', logintoken, { expires: new Date(Date.now() + 6000000) });
                 // res.cookie("logintoken", logintoken, {
                 //     expires:new Date(Date.now()+500000),
                 //     httpOnly:true
                 // })
-                res.json({user:userindb,logintoken:logintoken})
+                res.json({ user: userindb, logintoken: logintoken })
 
             } else {
+                console.log('')
                 res.status(400).json({
                     message: "invalid password",
                     status: 400
@@ -112,7 +119,7 @@ router.post('/userlogin', async (req, res) => {
             })
         }
     } catch (error) {
-        console.log('error in trycatch',error);
+        console.log('error in trycatch', error);
     }
 
 })
@@ -121,7 +128,7 @@ router.post('/userlogin', async (req, res) => {
 router.get('/logout', (req, res) => {
     res.clearCookie('logintoken')
     res.redirect('/')
-  })
+})
 
 // CHECK IF USER LOGGED IN OR NOT
 router.get('/checkloggedin', AuthUserMiddleware, (req, res) => {
@@ -129,17 +136,14 @@ router.get('/checkloggedin', AuthUserMiddleware, (req, res) => {
 })
 
 // SHOW USER PROFILE
-router.get('/userprofile', AuthUserMiddleware, (req, res) => {
-    res.send(req.verifieduser)
-})
+// router.get('/userprofile', AuthUserMiddleware, (req, res) => {
+//     res.send(req.verifieduser)
+// })
 
-router.post('/userprofile', AuthUserMiddleware, (req, res) => {
-    const logintoken = req.body.logintoken;
-    res.send(req.verifieduser)
-})
+
 
 // GET USERNAME ||| if logged in
-router.get('/getusername', AuthUserMiddleware, (req, res) => {
+router.post('/getusername', AuthUserMiddleware, (req, res) => {
     res.send({ username: req.username })
 })
 
